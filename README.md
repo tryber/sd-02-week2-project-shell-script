@@ -1,6 +1,3 @@
-# sd-02-week2-project-shell-script
-Repositório para o aluno enviar o projeto da semana 2 do curso. Tema: Shell Script e GIT
-
 # Boas vindas ao repositório do projeto de GIT e Shell Script!
 
 Você já começou a usar o GitHub e a partir de agora vai usá-lo diariamente para desenvolver os exercícios. Agora, para desenvolver os projetos, você deverá seguir as instruções a seguir. Fique atento a cada passo, e se tiver qualquer dúvida, nos envie por _Slack_! #vqv 🚀
