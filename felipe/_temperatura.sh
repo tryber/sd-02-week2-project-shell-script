@@ -6,4 +6,4 @@ echo "Digite o nome da cidade:"
 read CIDADE
 
 RESPONSE=`curl -s -G --data-urlencode "appid=$API_KEY" --data-urlencode "q=$CIDADE" http://api.openweathermap.org/data/2.5/weather`
-echo $RESPONSE
+echo $RESPONSE | cat >> resultado.txt
