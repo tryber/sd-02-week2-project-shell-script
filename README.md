@@ -30,7 +30,7 @@ Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu
   * Crie a pasta e o arquivo **README.md**
     * Exemplo:
       * `mkdir joaozinho`
-      * `echo "Instruções a seguir:" > joaozinho/README.md`
+      * `echo "Instruções a seguir:" > joozinho/README.md`
 
 4. Adicione as mudanças ao _stage_ do Git e faça um `commit`
   * Verifique que as mudanças ainda não estão no _stage_
