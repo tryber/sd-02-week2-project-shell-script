@@ -5,14 +5,13 @@ echo "Imagem de que você procura?"
 read SEARCH_TERM
 echo "Quantas imagens de $SEARCH_TERM você quer?"
 read QTY_RESULTS
-resultpadrao=3
-if [ -z $SEARCH_TERM  ]
+if [ $SEARCH_TERM -z ] > /dev/null 2> /dev/null
 then
     echo "Você deve passar um argumento valido!"
     exit 1
-elif [ -z $QTY_RESULTS ]
+elif [ $QTY_RESULTS -z ] > /dev/null 2> /dev/null
 then
-    QTY_RESULTS = $resultpadrao
+    QTY_RESULTS=3
 fi
 if (($QTY_RESULTS < 3 || $QTY_RESULTS > 200))
 then
@@ -30,7 +29,7 @@ then
     echo "Que pena, nenhuma imagem de $SEARCH_TERM foi encontrada"
     exit 0
 fi
-if [ $SEARCH_TERM -e ]
+if [ $SEARCH_TERM -e ] > /dev/null 2> /dev/null
 then
     mv teste.txt ./$SEARCH_TERM
     cd $SEARCH_TERM
