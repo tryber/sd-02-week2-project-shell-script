@@ -15,21 +15,26 @@ if [[ ($QUANTIDADE -lt 3) || ($QUANTIDADE -gt 200) ]]; then
 fi
 
 #capturando se a pessoa quer compactar os arquivos
-# ZIPAR=$(zenity --yesno --title="Pictures" --width=350 --height=150 --text="Deseja compactar os arquivos")
-ZIPAR=0
+ZIPAR=$(zenity --question --width 300 --text "Quer compactar o resultado?"; echo $?)
 API_KEY=14222272-ffb471ea36ea7197b478c53d4
 RESPONSE=`curl -s -G -L --data-urlencode "key=$API_KEY" --data-urlencode "q=$TERMO" --data-urlencode "image_type=photo" --data-urlencode "per_page=$QUANTIDADE" https://pixabay.com/api`
-echo $RESPONSE
+echo $RESPONSE > saida.txt
 
-curl -s -G -L --data-urlencode "key=$API_KEY" --data-urlencode "q=$TERMO" --data-urlencode "image_type=photo" --data-urlencode "per_page=$QUANTIDADE" https://pixabay.com/api | cat >saidaaa.txt
-
-grep -o -E '"largeImageURL":"https://pixabay.com/get/\w+' saida.txt | awk -F '":"' '{print $2}' | cat > downloads.txt
+grep -o -E '"largeImageURL":"https://pixabay.com/get/\w+....' saida.txt | awk -F '":"' '{print $2}' | cat > downloads.txt
 
 mkdir "$TERMO"
 mv downloads.txt ./$TERMO
 cd $TERMO
 cat downloads.txt | xargs wget
+cd ..
 
 if [ $ZIPAR == 0 ]; then
-    zip "$TERMO.zip" "$TERMO/"
+    cd $TERMO
+    zip "$TERMO.zip" *
+    mv $TERMO.zip ..
+    rm *
+    cd ..
+    rmdir $TERMO
 fi
+
+rm saida.txt
