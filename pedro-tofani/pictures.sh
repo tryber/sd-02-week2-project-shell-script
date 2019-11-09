@@ -16,11 +16,20 @@ fi
 
 #capturando se a pessoa quer compactar os arquivos
 # ZIPAR=$(zenity --yesno --title="Pictures" --width=350 --height=150 --text="Deseja compactar os arquivos")
-
+ZIPAR=0
 API_KEY=14222272-ffb471ea36ea7197b478c53d4
 RESPONSE=`curl -s -G -L --data-urlencode "key=$API_KEY" --data-urlencode "q=$TERMO" --data-urlencode "image_type=photo" --data-urlencode "per_page=$QUANTIDADE" https://pixabay.com/api`
 echo $RESPONSE
-echo ""
-cat > saida.txt echo $RESPONSE
 
-# grep -o '"largeImageURL":"https://pixabay.com/get/' saida.txt
+curl -s -G -L --data-urlencode "key=$API_KEY" --data-urlencode "q=$TERMO" --data-urlencode "image_type=photo" --data-urlencode "per_page=$QUANTIDADE" https://pixabay.com/api | cat >saidaaa.txt
+
+grep -o -E '"largeImageURL":"https://pixabay.com/get/\w+' saida.txt | awk -F '":"' '{print $2}' | cat > downloads.txt
+
+mkdir "$TERMO"
+mv downloads.txt ./$TERMO
+cd $TERMO
+cat downloads.txt | xargs wget
+
+if [ $ZIPAR == 0 ]; then
+    zip "$TERMO.zip" "$TERMO/"
+fi
