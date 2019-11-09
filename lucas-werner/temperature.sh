@@ -14,3 +14,5 @@ RESPONSE=$(curl -s -G --data-urlencode "appid=$API_KEY" --data-urlencode "q=$CID
 echo $RESPONSE #regex para tratar a response
 
 fi
+
+#NOT_FOUND_REGEXP="\"cod\":\"404\"" 
