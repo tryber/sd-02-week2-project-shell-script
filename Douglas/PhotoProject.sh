@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#inserir interface melhor
 API_KEY=14207965-9493642060cb1c95148269738
 echo "Imagem de que você procura?"
 read SEARCH_TERM
