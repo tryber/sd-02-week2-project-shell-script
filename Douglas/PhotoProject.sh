@@ -9,17 +9,17 @@ fi
 pacote=$(dpkg --get-selections | grep xcowsay ) 
 if [ -z "$pacote" ] ;
 then 
-     echo "Vamos precisar instar o XCOWSAY e o GTK para começar"
+     echo "Vamos precisar instar o XCOWSAY começar"
      sudo apt-get install xcowsay
-     sudo apt-get gtk
 fi
-
-BaixaFoto(){
+xcowsay "Meu nome é Clotilde serei sua assistente,
+vocẽ pode fechar qualquer caixa de dialogo para sair do programa" > /dev/null 2> /dev/null
+function Baixar(){
     #Inicio do codigo para buscar imagem
     API_KEY=14207965-9493642060cb1c95148269738
-    xcowsay "Meu nome é Clotilde serei sua assistente, qual imagem você procura?" > /dev/null 2> /dev/null
     #Recebendo o assunto a ser pesquisado
-    Busca=$(yad --entry --text="Qual imagem você procura?" --height="100" --width="200" --title="Responda a Clotilde" --buttons-layout=center --button="gtk-ok:0" )
+    xcowsay "Qual imagem você procura?" > /dev/null 2> /dev/null
+    Busca=$(yad --entry --text="Qual imagem você deseja?" --height="100" --width="200" --title="Responda a Clotilde" --buttons-layout=center --button="gtk-ok:0" )
     #Verificando e finalizando o programa se a opção de fechar a caixinha foi utilizada
     if [ $? -eq 252 ]
     then 
@@ -84,10 +84,16 @@ BaixaFoto(){
         mv $Busca.tar.gz ..
         cd ..
         rm -r $Busca
-        xcowsay "Seu arquivo \"$Busca.tar.gz\" está pronto! Até a proxíma." > /dev/null 2> /dev/null
-        exit 0
+        xcowsay "Seu arquivo \"$Busca.tar.gz\" está pronto!" > /dev/null 2> /dev/null
     #Opção caso o usuario não deseje tar.gz
     else   
-        xcowsay "Suas imagens ja estão na pasta "$Busca", Até a proxíma." > /dev/null 2> /dev/null
+        xcowsay "Suas imagens ja estão na pasta \"$Busca\"" > /dev/null 2> /dev/null
     fi
 }
+while [ $? -ne 1 ]; do
+    Baixar
+    xcowsay "Deseja procurar mais imagens?" > /dev/null 2> /dev/null
+    (yad --text="Deseja procurar mais imagens?" --height="100" --width="200" --title="Responda a Clotilde" --buttons-layout=center --button="gtk-yes:0" --button="gtk-no:1" )
+done
+
+xcowsay "Ate mais!" > /dev/null 2> /dev/null
