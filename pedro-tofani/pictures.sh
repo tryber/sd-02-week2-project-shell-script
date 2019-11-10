@@ -23,18 +23,18 @@ echo $RESPONSE > saida.txt
 grep -o -E '"largeImageURL":"https://pixabay.com/get/\w+....' saida.txt | awk -F '":"' '{print $2}' | cat > downloads.txt
 
 mkdir "$TERMO"
-mv downloads.txt ./$TERMO
-cd $TERMO
+mv downloads.txt "./$TERMO"
+cd "$TERMO"
 cat downloads.txt | xargs wget
 cd ..
 
 if [ $ZIPAR == 0 ]; then
-    cd $TERMO
+    cd "$TERMO"
     zip "$TERMO.zip" *
-    mv $TERMO.zip ..
+    mv "$TERMO.zip" ..
     rm *
     cd ..
-    rmdir $TERMO
+    rmdir "$TERMO"
 fi
 
 rm saida.txt
