@@ -4,6 +4,16 @@ echo "Onde você deseja verificar o tempo hoje?"
 echo "Digite o nome da cidade:"
     read -r CIDADE
 
+ping -c 1 google.com | cat > retornoPing.txt || exit
+
+if [ $? = 0 ]
+then
+echo "Você tem uma conexão, vamos à pesquisa!"
+else
+echo "Você não tem uma conexão à internet pra realizar a busca =("
+exit
+fi
+
 if [ -z "$CIDADE" ]
     then
         echo "Você precisa inserir o nome de uma cidade para continuar"
