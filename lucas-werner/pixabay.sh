@@ -1,5 +1,5 @@
 #!/bin/bash
-API_KEY=14226934-e6bc1f36fa5e1560bf098247e
+API_KEY=14234971-002ebb11c2d7a00eb49d80094
 TMP_FILE=tmp_pixabay.txt
 REGEX_FILE=pixabay_regex.txt
 SEARCH_TERM="$1"

@@ -1,6 +1,6 @@
 #!/bin/bash
 CIDADE=$*
-API_KEY=434d61d332b71d8b17a8bf7246f78d7e
+API_KEY=5ca155ba4d74debf88acb3fdc7f5128f
 TMP_FILE=tmp_temperatura.txt
 ping -w 1 8.8.8.8 >/dev/null 2>&1
 LAST_SH=$?
