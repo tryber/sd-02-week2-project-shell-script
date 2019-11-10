@@ -12,47 +12,49 @@ then
      echo "Vamos precisar instar o XCOWSAY começar"
      sudo apt-get install xcowsay
 fi
-xcowsay "Meu nome é Clotilde serei sua assistente,
-vocẽ pode fechar qualquer caixa de dialogo para sair do programa" > /dev/null 2> /dev/null
+
+xcowsay --at=400,300 "Meu nome é Clotilde serei sua assistente,
+vocẽ pode fechar qualquer caixa de 
+dialogo para sair do programa" 2> /dev/null
 function Baixar(){
     #Inicio do codigo para buscar imagem
     API_KEY=14207965-9493642060cb1c95148269738
     #Recebendo o assunto a ser pesquisado
-    xcowsay "Qual imagem você procura?" > /dev/null 2> /dev/null
-    Busca=$(yad --entry --text="Qual imagem você deseja?" --height="100" --width="200" --title="Responda a Clotilde" --buttons-layout=center --button="gtk-ok:0" )
+    xcowsay --at=400,300 "Qual imagem você procura?" 2> /dev/null
+    Busca=$(yad --entry --text="Qual imagem você deseja?" --height="100" --width="200" --title="Responda a Clotilde"  --buttons-layout=center --button="gtk-ok:0" )
     #Verificando e finalizando o programa se a opção de fechar a caixinha foi utilizada
     if [ $? -eq 252 ]
     then 
-        xcowsay "Até mais" > /dev/null 2> /dev/null
+        xcowsay --at=400,300 "Até mais" 2> /dev/null
         exit 1
     #Verificando se foi passado o algum assunto
-    elif [ $Busca -z ] > /dev/null 2> /dev/null
+    elif [ $Busca -z ] 2> /dev/null
     then
-        xcowsay "Sem imagem, sem download, até mais"  > /dev/null 2> /dev/null
+        xcowsay --at=400,300 "Sem imagem, sem download, até mais"  2> /dev/null
         exit 1
     fi
-    xcowsay "Quantas imagens de \"$Busca\" você quer?"  > /dev/null 2> /dev/null
+    xcowsay --at=400,300 "Quantas imagens de \"$Busca\" você quer?"  2> /dev/null
     #Recebendo o numero de imagens
     Q_Fotos=$(yad --entry --text="Quantas imagens você deseja?" --height="100" --width="200" --title="Responda a Clotilde" --buttons-layout=center --button="gtk-ok:0" )
     #Verificando e finalizando o programa se a opção de fechar a caixinha foi utilizada
     if [ $? -eq 252 ]
     then 
-        xcow say "Até mais" > /dev/null 2> /dev/null
+        xcow say --at=400,300 "Até mais" 2> /dev/null
         exit 1
     fi
     #Valor padrão se a entrada for vazia
-    if [ $Q_Fotos -z ] > /dev/null 2> /dev/null
+    if [ $Q_Fotos -z ] 2> /dev/null
     then
         Q_Fotos=3
     fi
     #verificação se esta dentro dos padrões de 3 a 200
     if (( $Q_Fotos < 3 ))
     then
-        xcowsay "Desculpa, so consigo pegar o minimo de 3 imagens :C" > /dev/null 2> /dev/null
+        xcowsay --at=400,300 "Desculpa, so consigo pegar o minimo de 3 imagens :C" 2> /dev/null
         exit 1
     elif (( $Q_Fotos > 200 ))
     then
-        xcowsay "Desculpa, so consigo pegar 200 imagens por pesquisa :C" > /dev/null 2> /dev/null
+        xcowsay --at=400,300 "Desculpa, so consigo pegar 200 imagens por pesquisa :C" 2> /dev/null
         exit 1
     fi
     #Fazendo a busca pela api e registrando os dados em texto
@@ -63,18 +65,18 @@ function Baixar(){
     #Informando se não houver resultado
     if [ $encontrado -eq 0 ]
     then
-        xcowsay "Que pena, nenhuma imagem de \"$Busca\" foi encontrada, Até mais" > /dev/null 2> /dev/null
+        xcowsay --at=400,300 "Que pena, nenhuma imagem de \"$Busca\" foi encontrada, Até mais" 2> /dev/null
         exit 0
     fi
     #Criando a pasta caso não exista e baixando as fotos
-    mkdir $Busca  > /dev/null 2> /dev/null
+    mkdir $Busca  2> /dev/null
     mv Linksapi.txt ./$Busca  
     cd $Busca
     termo=$(egrep -o 'webformatURL":"https://pixabay.com/get/(\d+|\w+)+.\w{3}' Linksapi.txt | cut -d '"' -f3)
     wget --quiet $termo 
     #exclusão do arquivo que contem os links da api
     rm Linksapi.txt
-    xcowsay "Deseja ter suas imagens em formato tar.gz?" > /dev/null 2> /dev/null      
+    xcowsay --at=400,300 "Deseja ter suas imagens em formato tar.gz?" 2> /dev/null    
     #Verificando se o usario prefere ter um arquivo tar.gz
     (yad --text="Deseja ter suas imagens em formato tar.gz?" --height="100" --width="200" --title="Responda a Clotilde" --buttons-layout=center --button="gtk-yes:0" --button="gtk-no:1" )
     #criação do arquivo tar.gz com as fotos
@@ -84,16 +86,16 @@ function Baixar(){
         mv $Busca.tar.gz ..
         cd ..
         rm -r $Busca
-        xcowsay "Seu arquivo \"$Busca.tar.gz\" está pronto!" > /dev/null 2> /dev/null
+        xcowsay --at=400,300 "Seu arquivo \"$Busca.tar.gz\" está pronto!" 2> /dev/null
     #Opção caso o usuario não deseje tar.gz
     else   
-        xcowsay "Suas imagens ja estão na pasta \"$Busca\"" > /dev/null 2> /dev/null
+        xcowsay --at=400,300 "Suas imagens ja estão na pasta \"$Busca\"" 2> /dev/null
     fi
 }
 while [ $? -ne 1 ]; do
     Baixar
-    xcowsay "Deseja procurar mais imagens?" > /dev/null 2> /dev/null
+    xcowsay --at=400,300 "Deseja procurar mais imagens?" 2> /dev/null
     (yad --text="Deseja procurar mais imagens?" --height="100" --width="200" --title="Responda a Clotilde" --buttons-layout=center --button="gtk-yes:0" --button="gtk-no:1" )
 done
-
-xcowsay "Ate mais!" > /dev/null 2> /dev/null
+cd ./Imagem
+xcowsay --at=400,300 -d ImageLu.jpeg 2> /dev/null
