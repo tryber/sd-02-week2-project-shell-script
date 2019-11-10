@@ -4,7 +4,7 @@ echo "Onde você deseja verificar o tempo hoje?"
 echo "Digite o nome da cidade:"
     read -r CIDADE
 
-ping -c 1 google.com | cat > retornoPing.txt || exit
+ping -c 1 google.com >/dev/null
 
 if [ $? = 0 ]
 then
