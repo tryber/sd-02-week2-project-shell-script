@@ -90,6 +90,7 @@ function Baixar(){
     #Opção caso o usuario não deseje tar.gz
     else   
         xcowsay --at=400,300 "Suas imagens ja estão na pasta \"$Busca\"" 2> /dev/null
+        cd ..
     fi
 }
 while [ $? -ne 1 ]; do
