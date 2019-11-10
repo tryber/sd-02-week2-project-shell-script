@@ -1,18 +1,18 @@
 #!/bin/bash 
-
+clear
 API_Key=14225963-65f011eac0dcadc2019128ae2
 
 echo -e "Digite um termo de busca para download de imagens:\n(somente em português)"
 read termoBusca
-
+clear
 if [[ -z "$termoBusca" ]]; then
     echo "Ops, você precisa digitar um termo de busca!"
     exit 1
 fi
-
+clear
 echo "Quantas imagens você deseja baixar?"
 read qtdeResultados
-
+clear
 if [[ -z "$qtdeResultados" ]]; then
     qtdePadrao=3
     echo -e "Por padrão, serão baixadas três imagens!\nAguarde enquanto buscamos..."
@@ -23,14 +23,36 @@ if [[ -z "$qtdeResultados" ]]; then
         rm -rf lista.txt
         exit 1
     fi
+    clear
     echo "Suas imagens estão sendo baixadas!"
     mkdir $termoBusca 
     mv lista.txt ./$termoBusca/
     cd $termoBusca 
-    wget -i lista.txt
+    wget -i lista.txt -q
     
     echo "Suas fotos foram salvas na pasta \"$termoBusca\""
+    Menu(){
+            echo -e "Você deseja compactar a pasta com os arquivos?\n[ 1 ] Sim\n[ 2 ] Não\n[ 3 ] Sair\nQual a opção desejada?"
+            read condicional
 
+            case $condicional in
+                1) Sim ;;
+                2) Não ;;
+                3) exit ;;
+                *) echo -e "\nOpção desconhecida, informe uma opção válida" ; echo ; Menu ;;
+            esac
+        }
+        Sim () {
+            cd ..
+            tar -zcf $termoBusca.tar.gz $termoBusca/
+            echo "Seu arquivo foi compactado"
+            rm -rf $termoBusca
+            exit
+        }
+        Não () {
+        exit
+        }
+        Menu
     exit 1
 
 elif (( "$qtdeResultados" < 3 || "$qtdeResultados" > 200 )); then
@@ -56,8 +78,51 @@ elif (( "$qtdeResultados" >= 3 || "$qtdeResultados" <= 200 )); then
     mkdir $termoBusca 
     mv lista.txt ./$termoBusca/
     cd $termoBusca 
-    wget -i lista.txt
-    
-    echo "Suas fotos foram salvas na pasta \"$termoBusca\""
+    wget -i lista.txt -q
+    rm -rf lista.txt 
+    clear
+    echo "Suas fotos foram salvas na pasta \"$termoBusca\"!"
+        
+        Menu(){
+            echo -e "Você deseja compactar a pasta com os arquivos?\n[ 1 ] Sim\n[ 2 ] Não\n[ 3 ] Sair\nQual a opção desejada?"
+            read condicional
+
+            case $condicional in
+                1) Sim ;;
+                2) Não ;;
+                3) exit ;;
+                *) echo -e "\nOpção desconhecida, informe uma opção válida" ; echo ; Menu ;;
+            esac
+        }
+        Sim () {
+            cd ..
+            tar -zcf $termoBusca.tar.gz $termoBusca/
+            echo "Seu arquivo foi compactado"
+            rm -rf $termoBusca
+            exit
+        }
+        Não () {
+        exit
+        }
+        Menu
 
 fi
+
+# Menu(){
+#     echo -e "Você deseja compactar a pasta com os arquivos?\n[ 1 ] Sim\n[ 2 ] Não\n Qual a opção desejada?"
+#     read condicional
+
+#     case $condicional in
+#         1) Sim ;;
+#         2) Não ;;
+#         *) "Opção desconhecida" ; echo ; Principal ;;
+#     esac
+# }
+# Sim () {
+#     gzip $termoBusca
+#     echo "Seu arquivo foi compactado"
+#     exit
+# }
+# Não () {
+#     exit
+# }
