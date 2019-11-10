@@ -21,7 +21,9 @@ if [ ! -e "$CIDADE" ]
     echo "A cidade que você inseriu não existe, insira o nome corretamente"
     exit
     fi
-                echo "A temperatura em "$CIDADE" é de "$conversaoCelsius"º Celius"
+                echo "A temperatura em "$CIDADE" neste exato momento é de "$conversaoCelsius"º Celius"
 fi
+
+rm -rf resultado.txt
 
         
