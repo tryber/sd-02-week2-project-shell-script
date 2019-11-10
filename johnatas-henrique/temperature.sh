@@ -18,7 +18,7 @@ else
             CIDADE_TEMP=$(grep -o -E '"temp":[^,]+' "$TMP_FILE" | grep -o -E '[^:]+$')
             TEMPERATURA_TR=$(echo "$CIDADE_TEMP" | tr . ,)
             PAIS=$(grep -o -E '"country\":[^,]+' "$TMP_FILE" | grep -o -E '[A-Z]{2}')
-            xcowsay --at=400,250 $"Em "$CIDADE", "$PAIS", a temperatura é de "$TEMPERATURA_TR"ºC."
+            xcowsay --at=400,250 $'Em '"$CIDADE"', '"$PAIS"', a temperatura é de '"$TEMPERATURA_TR"'ºC.'
         fi
         rm tmp_file.txt
     fi
