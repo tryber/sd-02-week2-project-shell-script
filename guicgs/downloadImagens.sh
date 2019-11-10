@@ -107,22 +107,3 @@ elif (( "$qtdeResultados" >= 3 || "$qtdeResultados" <= 200 )); then
         Menu
 
 fi
-
-# Menu(){
-#     echo -e "Você deseja compactar a pasta com os arquivos?\n[ 1 ] Sim\n[ 2 ] Não\n Qual a opção desejada?"
-#     read condicional
-
-#     case $condicional in
-#         1) Sim ;;
-#         2) Não ;;
-#         *) "Opção desconhecida" ; echo ; Principal ;;
-#     esac
-# }
-# Sim () {
-#     gzip $termoBusca
-#     echo "Seu arquivo foi compactado"
-#     exit
-# }
-# Não () {
-#     exit
-# }
