@@ -15,10 +15,15 @@ read qtdeResultados
 
 if [[ -z "$qtdeResultados" ]]; then
     qtdePadrao=3
-    echo -e "Por padrão, serão baixadas três imagens!\nSuas imagens estão sendo baixadas..."
+    echo -e "Por padrão, serão baixadas três imagens!\nAguarde enquanto buscamos..."
     RESPONSE=`curl -s -G -L --data-urlencode "key=$API_Key" --data-urlencode "q=$termoBusca" --data-urlencode "image_type=photo" --data-urlencode "lang=pt" --data-urlencode "per_page=$qtdePadrao" https://pixabay.com/api`
     echo $RESPONSE | egrep -o '"webformatURL":[^,]+' | egrep -o '(http[s]?|[s]?ftp[s]?)(:\/\/)([^\s,]+)([^"]+)' > lista.txt
-    
+    if [[ ! -s lista.txt ]]; then
+        echo "Ops, não encontrei nenhuma imagem para esta busca."
+        rm -rf lista.txt
+        exit 1
+    fi
+    echo "Suas imagens estão sendo baixadas!"
     mkdir $termoBusca 
     mv lista.txt ./$termoBusca/
     cd $termoBusca 
@@ -27,15 +32,26 @@ if [[ -z "$qtdeResultados" ]]; then
     echo "Suas fotos foram salvas na pasta \"$termoBusca\""
 
     exit 1
-fi
-if (( "$qtdeResultados" <= 3 || "$qtdeResultados" >= 200 )); then
+
+elif (( "$qtdeResultados" < 3 || "$qtdeResultados" > 200 )); then
     echo "Ops, o número de imagens deve estar entre 3 e 200."
     exit 1
-fi
-elif [[ "$qtdeResultados" -ge 3 -le 200 ]]; then
-    echo "Suas imagens estão sendo baixadas..."
+
+elif (( "$qtdeResultados" >= 3 || "$qtdeResultados" <= 200 )); then
+    
+    echo "Aguarde enquanto buscamos..."
+
     RESPONSE=`curl -s -G -L --data-urlencode "key=$API_Key" --data-urlencode "q=$termoBusca" --data-urlencode "image_type=photo" --data-urlencode "lang=pt" --data-urlencode "per_page=$qtdeResultados" https://pixabay.com/api`
+    
     echo $RESPONSE | egrep -o '"webformatURL":[^,]+' | egrep -o '(http[s]?|[s]?ftp[s]?)(:\/\/)([^\s,]+)([^"]+)' > lista.txt
+    
+    if [[ ! -s lista.txt ]]; then
+        echo "Ops, não encontrei nenhuma imagem para esta busca."
+        rm -rf lista.txt
+        exit 1
+    fi
+    
+    echo "Suas imagens estão sendo baixadas..."
     
     mkdir $termoBusca 
     mv lista.txt ./$termoBusca/
@@ -44,9 +60,4 @@ elif [[ "$qtdeResultados" -ge 3 -le 200 ]]; then
     
     echo "Suas fotos foram salvas na pasta \"$termoBusca\""
 
-else
-    echo "Ops, não encontrei nenhuma imagem para esta busca."
 fi
-
-#RESPONSE=`curl -s -G -L --data-urlencode "key=$API_Key" --data-urlencode "q=$termoBusca" --data-urlencode "image_type=photo" --data-urlencode "per_page=$qtdeResultados" https://pixabay.com/api`
-#echo $RESPONSE
