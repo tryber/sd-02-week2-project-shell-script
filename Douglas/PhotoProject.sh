@@ -83,9 +83,8 @@ function Baixar(){
     then 
         xcowsay --at=400,300 "Até mais" 2> /dev/null
         exit 1
-    fi
     #criação do arquivo tar.gz com as fotos
-    if [ $? -eq 0 ]
+    elif [ $? -eq 0 ]
     then 
         tar -czf $Busca.tar.gz *.jpg
         mv $Busca.tar.gz ..
@@ -102,11 +101,6 @@ while [ $? -ne 1 ]; do
     Baixar
     xcowsay --at=400,300 "Deseja procurar mais imagens?" 2> /dev/null
     (yad --text="Deseja procurar mais imagens?" --height="100" --width="200" --title="Responda a Clotilde" --buttons-layout=center --button="gtk-yes:0" --button="gtk-no:1" )
-    if [ $? -eq 252 ]
-    then 
-        xcowsay --at=400,300 "Até mais" 2> /dev/null
-        exit 0
-    fi
 done
 cd ./Imagem
 xcowsay --at=400,300 -d ImageLu.jpeg 2> /dev/null
