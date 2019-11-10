@@ -1,4 +1,4 @@
-#!/bin/bash
+2.#!/bin/bash
 
 echo "Digite o nome de uma cidade para saber a temperatura atual: "
 read CIDADE

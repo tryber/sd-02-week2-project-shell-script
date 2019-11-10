@@ -1,4 +1,4 @@
-#!/bin/bash
+ls#!/bin/bash
 echo "Digite o nome de uma cidade para saber a temperatura atual: "
 read CIDADE
 API_KEY=5ca155ba4d74debf88acb3fdc7f5128f
