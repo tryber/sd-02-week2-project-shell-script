@@ -3,13 +3,13 @@
 pacote=$(dpkg --get-selections | grep yad ) 
 if [ -z "$pacote" ] ;
 then 
-     echo "Vamos precisar instar o YAD para começar"
+     echo "Vamos precisar instalar o YAD para começar"
      sudo apt-get install yad
 fi
 pacote=$(dpkg --get-selections | grep xcowsay ) 
 if [ -z "$pacote" ] ;
 then 
-     echo "Vamos precisar instar o XCOWSAY começar"
+     echo "Vamos precisar instalar o XCOWSAY começar"
      sudo apt-get install xcowsay
 fi
 
