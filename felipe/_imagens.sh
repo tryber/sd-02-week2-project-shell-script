@@ -3,7 +3,17 @@ clear
 API_Key=14225963-65f011eac0dcadc2019128ae2
 
 echo -e "Digite um termo de busca para download de imagens:\n(somente em português)"
-read -r termoBusca
+
+ping -c 1 google.com >/dev/null
+ultimaSaida=$?
+if [ "$ultimaSaida" = 0 ]
+then
+echo "Você tem uma conexão, vamos à pesquisa!"
+else
+echo "Você não tem uma conexão à internet pra realizar a busca =("
+exit
+fi
+
 clear
 if [[ -z "$termoBusca" ]]; then
     echo "Ops, você precisa digitar um termo de busca!"
