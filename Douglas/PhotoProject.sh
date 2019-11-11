@@ -79,12 +79,8 @@ function Baixar(){
     xcowsay --at=400,300 "Deseja ter suas imagens em formato tar.gz?" 2> /dev/null    
     #Verificando se o usario prefere ter um arquivo tar.gz
     (yad --text="Deseja ter suas imagens em formato tar.gz?" --height="100" --width="200" --title="Responda a Clotilde" --buttons-layout=center --button="gtk-yes:0" --button="gtk-no:1" )
-    if [ $? -eq 252 ]
-    then 
-        xcowsay --at=400,300 "Até mais" 2> /dev/null
-        exit 1
     #criação do arquivo tar.gz com as fotos
-    elif [ $? -eq 0 ]
+    if [ $? -eq 0 ]
     then 
         tar -czf $Busca.tar.gz *.jpg
         mv $Busca.tar.gz ..
