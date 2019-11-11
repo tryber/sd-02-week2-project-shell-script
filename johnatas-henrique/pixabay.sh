@@ -38,30 +38,31 @@ xcowsay --at=100,250 $'Qual a saída preferida? Uma pasta ou um arquivo TAR?'
 OPTION=$(zenity  --list  --text "Escolha sua opção" --radiolist --column "Marcar" --column "Opções" FALSE "Arquivo TAR" TRUE "Nova pasta");
 if [ "$OPTION" = "Nova pasta" ]; then
 mkdir "$SEARCH_TERM" 2> /dev/null
-    if [ $? != 0 ]; then
+LAST_SH=$?
+    if [ "$LAST_SH" -gt 0 ]; then
         xcowsay --at=100,250 $'Ops, parece que a pasta já existe!\nCaso queira criar uma pasta nova, digite um nome para a pasta e clique no OK.\nCaso queira utilizar a pasta já criada, deixe a caixa em branco e clique em OK.'
         PASTA=$(zenity --title="Criar nova pasta?" --text "Por favor, insira um nome para a nova pasta ou deixe vazio para usar a pasta já criada." --entry)
         if [ -z "$PASTA" ]; then
             PASTA="$SEARCH_TERM"
         fi
         mkdir "$PASTA" 2> /dev/null
-        cd "$PASTA"
+        cd "$PASTA" || exit
         wget --show-progress -qi ../"$REGEX_FILE" | zenity --progress --pulsate --no-cancel --text "Baixando fotos, aguarde um momento:" --width=300 --height=80
         xcowsay --at=100,250 $'Os arquivos foram baixados para a pasta \n'"$PASTA"', obrigado pelo uso!'
     else
-        cd "$SEARCH_TERM"
+        cd "$SEARCH_TERM" || exit
         wget --show-progress -qi ../"$REGEX_FILE" | zenity --progress --pulsate --no-cancel --text "Baixando fotos, aguarde um momento:" --width=300 --height=80
         xcowsay --at=100,250 $'Os arquivos foram baixados para a pasta \n'"$SEARCH_TERM"', obrigado pelo uso!'
     fi
 elif [ "$OPTION" = "Arquivo TAR" ]; then
     mkdir pixabay-"$TIMESTAMP"
-    cd pixabay-"$TIMESTAMP"
+    cd pixabay-"$TIMESTAMP" || exit
     wget --show-progress -qi ../"$REGEX_FILE" | zenity --progress --pulsate --no-cancel --auto-close --text "Baixando fotos, aguarde um momento:" --width=300 --height=80
-    cd ..
-    tar -czf pixabay-"$TIMESTAMP".tar.gz pixabay-"$TIMESTAMP"
+    cd $PASTA_INIT || exit
+    tar -czf pixabay-"$SEARCH_TERM"-"$TIMESTAMP".tar.gz pixabay-"$TIMESTAMP"
     rm -r pixabay-"$TIMESTAMP"
     xcowsay --at=100,250 $'Os arquivos foram baixados e após isso compactados, o nome do arquivo TAR é:\npixabay-'"$TIMESTAMP"'.tar.gz, obrigado pelo uso!'
 fi
-cd $PASTA_INIT
+cd $PASTA_INIT || exit
     rm $TMP_FILE
     rm $REGEX_FILE
