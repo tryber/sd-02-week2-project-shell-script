@@ -1,17 +1,17 @@
-#Arquivos da Semana 2 - Projeto Shell Script
+# Arquivos da Semana 2 - Projeto Shell Script
 
-#Geral:
+# Geral:
 
 Nos **dois exercícios**, preferimos utilizar apenas **REGEX**, apesar da facilidade de usar o `jq`, para fixação dos conteúdos.
 Os dois scripts dependem do `zenity` e do `xcowsay` para funcionarem corretamente, sem esses dois programas, o script não roda perfeitamente.
 
-###Exercício 1:
+## Exercício 1:
 
 1.0) **Todas** as **funções** pedidas na página do curso foram **alcançadas, incluindo a bônus**.
 1.1) Esse script **não necessita** que cidades com mais de um nome sejam escritas entre **aspas** (exemplo, Belo Horizonte), pois ele pega todos os argumentos passados e transforma em apenas 1 argumento.
 1.2) Foi **adicionada** uma função pequena a mais no exercício, que é a **visualização do país** ao qual a cidade pertence, colocamos isso para ajudar a checar se a cidade retornada na pesquisa é a correta, por exemplo, a cidade de Embu, também é conhecida como Embu das Artes, no script ao digitarmos Embu, temos o retorno de uma cidade do Quênia (KE), chamada Embu, então nesse caso, foi importante para ajudar a saber que estávamos pesquisando a cidade errada (que deve ser pesquisada como Embu das Artes).
 
-###Exercício 2:
+## Exercício 2:
 
 1.0) **Todas** as **funções** pedidas na página do curso foram **alcançadas, incluindo a bônus**.
 1.1) O **script verifica** se o **argumento #2** (número de fotos a ser baixadas) é um **número**, porque um usuário pode digitar uma string ali e causar um erro, o script está **tratando** o **erro**, e passando uma **orientação** para o **usuário** sobre como proceder caso isso ocorra.
