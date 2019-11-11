@@ -3,13 +3,13 @@
 pacote=$(dpkg --get-selections | grep yad ) 
 if [ -z "$pacote" ] ;
 then 
-     echo "Vamos precisar instar o YAD para começar"
+     echo "Vamos precisar instalar o YAD para começar"
      sudo apt-get install yad
 fi
 pacote=$(dpkg --get-selections | grep xcowsay ) 
 if [ -z "$pacote" ] ;
 then 
-     echo "Vamos precisar instar o XCOWSAY começar"
+     echo "Vamos precisar instalar o XCOWSAY começar"
      sudo apt-get install xcowsay
 fi
 
@@ -96,8 +96,7 @@ function Baixar(){
 while [ $? -ne 1 ]; do
     Baixar
     xcowsay --at=400,300 "Deseja procurar mais imagens?" 2> /dev/null
-    (yad --text="Deseja procurar mais imagens?" --height="100" --width="200" --title="Responda a Clotilde" --buttons-layout=center --button="gtk-yes:0" --button="gtk-no:1" )
+    test=$(yad --text="Deseja procurar mais imagens?" --height="100" --width="200" --title="Responda a Clotilde" --buttons-layout=center --button="gtk-yes:0" --button="gtk-no:1" )
 done
-cd ./Imagem
 xcowsay --at=400,300 -d ImageLu.jpeg 2> /dev/null
 
