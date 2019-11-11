@@ -58,11 +58,11 @@ elif [ "$OPTION" = "Arquivo TAR" ]; then
     mkdir pixabay-"$TIMESTAMP"
     cd pixabay-"$TIMESTAMP" || exit
     wget --show-progress -qi ../"$REGEX_FILE" | zenity --progress --pulsate --no-cancel --auto-close --text "Baixando fotos, aguarde um momento:" --width=300 --height=80
-    cd $PASTA_INIT || exit
+    cd "$PASTA_INIT" || exit
     tar -czf pixabay-"$SEARCH_TERM"-"$TIMESTAMP".tar.gz pixabay-"$TIMESTAMP"
     rm -r pixabay-"$TIMESTAMP"
     xcowsay --at=100,250 $'Os arquivos foram baixados e após isso compactados, o nome do arquivo TAR é:\npixabay-'"$TIMESTAMP"'.tar.gz, obrigado pelo uso!'
 fi
-cd $PASTA_INIT || exit
+cd "$PASTA_INIT" || exit
     rm $TMP_FILE
     rm $REGEX_FILE
