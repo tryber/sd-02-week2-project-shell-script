@@ -3,6 +3,7 @@ clear
 API_Key=14225963-65f011eac0dcadc2019128ae2
 
 echo -e "Digite um termo de busca para download de imagens:\n(somente em português)"
+read -r termoBusca
 
 ping -c 1 google.com >/dev/null
 ultimaSaida=$?
