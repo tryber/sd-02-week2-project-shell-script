@@ -13,10 +13,10 @@ Os dois scripts dependem do `zenity` e do `xcowsay` para funcionarem corretament
 
 ###Exercício 2:
 
-2.0) **Todas** as **funções** pedidas na página do curso foram **alcançadas, incluindo a bônus**.
-2.1) O **script verifica** se o **argumento #2** (número de fotos a ser baixadas) é um **número**, porque um usuário pode digitar uma string ali e causar um erro, o script está **tratando** o **erro**, e passando uma **orientação** para o **usuário** sobre como proceder caso isso ocorra.
-2.2) Utilizamos uma **janela do zenity** para que o usuário possa **escolher** sua opção, se **arquivo TAR** ou **nova pasta**, e com isso, demos ao usuário a opção de utilizar o **script todo sem** precisar do **terminal** depois de chamar o script com seus argumentos, a combinação do xcowsay com o zenity permite isso.
-2.3) Criamos uma **verificação** para saber se a **pasta** onde o script vai baixar as coisas **já existe**, se a pasta existir, ele dá **opção** ao usuário de ou digitar um **novo nome** para a pasta (o nome padrão é o nome da pesquisa do usuário passada via argumento) ou utilizar a pasta **já criada**.
-2.4) Na opção de criar o **arquivo .TAR**, vimos que caso o usuário faça a mesma pesquisa duas vezes, o nome do arquivo poderia causar problemas, então **adicionamos** ao nome do arquivo criado, um **timestamp**, com data completa (ano-mes-dia-hora-minuto-segundo), fazendo com que seja **extremamente difícil** qualquer tipo de **problema** em relação ao nome do arquivo, com a timestamp, é **praticamente impossível** dois **arquivos** saírem do script com o **mesmo nome**.
+1.0) **Todas** as **funções** pedidas na página do curso foram **alcançadas, incluindo a bônus**.
+1.1) O **script verifica** se o **argumento #2** (número de fotos a ser baixadas) é um **número**, porque um usuário pode digitar uma string ali e causar um erro, o script está **tratando** o **erro**, e passando uma **orientação** para o **usuário** sobre como proceder caso isso ocorra.
+1.2) Utilizamos uma **janela do zenity** para que o usuário possa **escolher** sua opção, se **arquivo TAR** ou **nova pasta**, e com isso, demos ao usuário a opção de utilizar o **script todo sem** precisar do **terminal** depois de chamar o script com seus argumentos, a combinação do xcowsay com o zenity permite isso.
+1.3) Criamos uma **verificação** para saber se a **pasta** onde o script vai baixar as coisas **já existe**, se a pasta existir, ele dá **opção** ao usuário de ou digitar um **novo nome** para a pasta (o nome padrão é o nome da pesquisa do usuário passada via argumento) ou utilizar a pasta **já criada**.
+1.4) Na opção de criar o **arquivo .TAR**, vimos que caso o usuário faça a mesma pesquisa duas vezes, o nome do arquivo poderia causar problemas, então **adicionamos** ao nome do arquivo criado, um **timestamp**, com data completa (ano-mes-dia-hora-minuto-segundo), fazendo com que seja **extremamente difícil** qualquer tipo de **problema** em relação ao nome do arquivo, com a timestamp, é **praticamente impossível** dois **arquivos** saírem do script com o **mesmo nome**.
 
 **#VQV #gotrybe**
