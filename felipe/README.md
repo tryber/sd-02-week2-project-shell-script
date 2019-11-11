@@ -15,4 +15,3 @@ Script: _imagens.sh
 
 Este script tem como finalidade realizar o download de imagens de acordo com o argumento inserido.
 O programa irá realizar o download das imagens, salvar em uma pasta com o nome do argumento inserido e você pode decidir se quer o resultado em uma pasta compactada ou não.
-
