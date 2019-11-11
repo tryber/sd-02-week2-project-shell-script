@@ -5,8 +5,8 @@ echo "Digite o nome da cidade:"
     read -r CIDADE
 
 ping -c 1 google.com >/dev/null
-
-if [ $? = 0 ]
+ultimaSaida=$?
+if [ $ultimaSaida = 0 ]
 then
 echo "Você tem uma conexão, vamos à pesquisa!"
 else
@@ -31,7 +31,7 @@ if [ ! -e "$CIDADE" ]
     echo "A cidade que você inseriu não existe, insira o nome corretamente"
     exit
     fi
-                echo "A temperatura em $CIDADE neste exato momento é de $conversaoCelsiusº Celius"
+                echo "A temperatura em $CIDADE neste exato momento é de $conversaoCelsiusº Celsius"
 fi
 
 rm -rf resultado.txt
