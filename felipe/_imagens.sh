@@ -40,6 +40,7 @@ clear
     mv lista.txt ./"$termoBusca"/
     cd "$termoBusca" || exit
     wget -i lista.txt -q
+    rm -rf lista.txt
 
     echo "Suas fotos foram salvas na pasta \"$termoBusca\""
     Menu(){
