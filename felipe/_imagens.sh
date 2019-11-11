@@ -105,5 +105,4 @@ elif (( "$qtdeResultados" >= 3 || "$qtdeResultados" <= 200 )); then
         exit
         }
         Menu
-
 fi
