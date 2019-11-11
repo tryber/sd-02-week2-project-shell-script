@@ -24,7 +24,7 @@ clear
 echo "Quantas imagens você deseja baixar?"
 read -r qtdeResultados
 clear
-if [[ -z "$qtdeResultados" ]]; then
+    if [[ -z "$qtdeResultados" ]]; then
     qtdePadrao=3
     echo -e "Por padrão, serão baixadas três imagens!\nAguarde enquanto buscamos..."
     RESPONSE=$(curl -s -G -L --data-urlencode "key=$API_Key" --data-urlencode "q=$termoBusca" --data-urlencode "image_type=photo" --data-urlencode "lang=pt" --data-urlencode "per_page=$qtdePadrao" https://pixabay.com/api)
@@ -67,7 +67,7 @@ if [[ -z "$qtdeResultados" ]]; then
     exit 1
 
 elif (( "$qtdeResultados" < 3 || "$qtdeResultados" > 200 )); then
-    echo "Ops, o número de imagens deve estar entre 3 e 200."
+    echo "Ops, o número de imagens deve ser um número e estar entre 3 e 200."
     exit 1
 
 elif (( "$qtdeResultados" >= 3 || "$qtdeResultados" <= 200 )); then
