@@ -9,6 +9,10 @@ fi
 
 #capturando variável quantidade
 QUANTIDADE=$(zenity --entry --title="Pictures" --width=350 --height=150 --text="Qual a quantidade de imagens?")
+if [[ -z "$QUANTIDADE" ]]; then
+    zenity --warning  --title="Pictures" --width=350 --height=150 --text="Você não informou a quantidade. Assumiremos 3 imagens."
+    QUANTIDADE=3 
+fi
 if [[ ($QUANTIDADE -lt 3) || ($QUANTIDADE -gt 200) ]]; then
     echo "A quantidade de resultados deve estar entre 3 e 200 :("
     exit 2
