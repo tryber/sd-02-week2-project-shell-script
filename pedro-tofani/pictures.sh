@@ -24,6 +24,12 @@ API_KEY=14222272-ffb471ea36ea7197b478c53d4
 RESPONSE=`curl -s -G -L --data-urlencode "key=$API_KEY" --data-urlencode "q=$TERMO" --data-urlencode "image_type=photo" --data-urlencode "per_page=$QUANTIDADE" https://pixabay.com/api`
 echo $RESPONSE > saida.txt
 
+if [[ $RESPONSE = '{"totalHits":0,"hits":[],"total":0}' ]]; then
+    zenity --warning  --title="Pictures" --width=350 --height=150 --text="Nenhum resultado encontrado."
+    rm saida.txt
+    exit 3
+fi
+
 grep -o -E 'webformatURL":"https://pixabay.com/get/\w+....' saida.txt | awk -F '":"' '{print $2}' | cat > downloads.txt
 
 mkdir "$TERMO"
