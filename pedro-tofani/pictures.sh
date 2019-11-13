@@ -20,7 +20,7 @@ API_KEY=14222272-ffb471ea36ea7197b478c53d4
 RESPONSE=`curl -s -G -L --data-urlencode "key=$API_KEY" --data-urlencode "q=$TERMO" --data-urlencode "image_type=photo" --data-urlencode "per_page=$QUANTIDADE" https://pixabay.com/api`
 echo $RESPONSE > saida.txt
 
-grep -o -E '"largeImageURL":"https://pixabay.com/get/\w+....' saida.txt | awk -F '":"' '{print $2}' | cat > downloads.txt
+grep -o -E 'webformatURL":"https://pixabay.com/get/\w+....' saida.txt | awk -F '":"' '{print $2}' | cat > downloads.txt
 
 mkdir "$TERMO"
 mv downloads.txt "./$TERMO"
