@@ -8,7 +8,7 @@ RESPONSE=`curl -s -G -L --data-urlencode "key=$API_KEY" --data-urlencode "q=$SEA
 WEB_URL_IMAGES=`echo $RESPONSE | egrep -o "\"webformatURL\":\"https://[a-zA-Z]*.com/get/[a-zA-Z0-9]*_[0-9]*.jpg"`
 ERRO_MSG=`echo $RESPONSE | egrep -o "\"totalHits\":[0-9]*" | cut -s -d":" -f2`
 
-if [ -z "$QTY_RESULTS"];then 
+if [ -z "$QTY_RESULTS" ];then 
     echo "Voce não digito nada, entao retornaremos o valor padrao = 3."
     QTY_RESULTS=3;                
 fi  
@@ -32,8 +32,20 @@ else
         VALOR_CONTROLE_CUT=$[$VALOR_CONTROLE_CUT+3]
     done
     cd $SEARCH_TERM
+    
     wget -i WebUrlTemp.txt
     rm $PATH_DIRECTORY/WebUrlTemp.txt
+    
+    read -p "Deseja compactar a pasta $SEARCH_TERM(S/N): " COMPACTAR
+    if [ "$COMPACTAR" == "S" ] || [ "$COMPACTAR" == "s" ] ; then
+        cd ..
+        tar -zcf $SEARCH_TERM.tar.gz $SEARCH_TERM
+        echo "Arquivo Compactado"
+        read -p "Deletar pasta $SEARCH_TERM (S/N): " DEL_DIR
+        if [ "$DEL_DIR" == "s" ] || [ "$DEL_DIR" == "S" ]; then
+            rm -r $SEARCH_TERM
+        fi
+    fi
 fi
 
 

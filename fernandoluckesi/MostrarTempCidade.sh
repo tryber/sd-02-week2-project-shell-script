@@ -10,6 +10,12 @@ ERRO_MSG=`echo $RESPONSE | egrep -o "\"cod\":\"[0-9]*\"" | cut -s -d":" -f2`
 #TEMPERATURA=$(echo $RESPONSE | jq '.main.temp')
 #ERRO_MSG=$(echo $RESPONSE | jq '.cod')
 
+if nc -zw1 google.com 443; then
+    echo "Voce esta conectado"
+else
+    echo "Voce não esta conectado a uma rede, por favor conecte-se e tente novamente."
+    exit 1
+fi
 
 if [ -z "$CIDADE" ]; then
     echo "Não foi informada uma cidade."
@@ -17,8 +23,7 @@ if [ -z "$CIDADE" ]; then
 elif [[ "$ERRO_MSG" == "\"404\"" ]];then
     echo "Não foi encontrado a temperatura para a cidade $CIDADE.Confira se é um nome válido para cidade."
     exit 1
-else  
-   
+else     
     TEMPERATURA=$(echo "scale=0; $TEMPERATURA - 273.15" | bc)  
     echo "A temperatura de $CIDADE é $TEMPERATURA graus Celsius."
 fi  
