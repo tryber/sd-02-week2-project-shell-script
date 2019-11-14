@@ -4,7 +4,8 @@ while [[ $SEARCH_TERM = "" ]]
 do
     read -p "Bem vindo à busca de imagens do Pixabay pelo terminal! O que você gostaria de ver? " SEARCH_TERM
     if [[ -z "$SEARCH_TERM" ]]; then
-        echo "Digite algo a ser pesquisado."    
+        echo "Desculpe, você precisa pesquisar um valor. O programa será encerrado." 
+        exit   
     fi   
 done
 
