@@ -4,8 +4,8 @@ while [[ $SEARCH_TERM = "" ]]
 do
     read -p "Bem vindo à busca de imagens do Pixabay pelo terminal! O que você gostaria de ver? " SEARCH_TERM
     if [[ $SEARCH_TERM = "" ]]; then
-        echo "Digite algo a ser pesquisado."
-
+        echo "Desculpe, você não digitou um termo válido para ser pesquisado. O programa será encerrado."
+        exit 
     fi   
 done
 
@@ -13,7 +13,9 @@ while [[ $QTY_RESULTS = "" || $(($QTY_RESULTS)) -le 2 || $(($QTY_RESULTS)) -gt 2
 do
     read -p "Qual a quantidade que você deseja de imagens de $SEARCH_TERM? Escolha uma quantidade entre 3 e 200 fotos! " QTY_RESULTS
     if [[ $QTY_RESULTS  = "" || $(($QTY_RESULTS)) -lt 2 || $(($QTY_RESULTS)) -gt 201 ]]; then
-        echo "Você deve digitar uma quantidade entre 3 e 200 para que possa funcionar."
+        echo "Buscando a quantidade mínima de imagens que é 3."
+        QTY_RESULTS=$((3))
+        break
     fi
 done
 
@@ -32,11 +34,19 @@ RESPONSE=`curl -s -G -L --data-urlencode "key=$API_KEY" --data-urlencode "q=$SEA
 
 RESPONSE_INDEX=0
 
+ERRO=`echo $RESPONSE | egrep -o "\"totalHits\":[0:9]*" | cut -s -d ":" -f2`
+echo $ERRO
+
+if [[ "$ERRO" == "0" ]]; then
+    echo "Ops! Não encontrei nada por aqui... tente outro termo!"
+    exit 1
+fi
+
 while [ $RESPONSE_INDEX -lt $QTY_RESULTS ]
 do
     IMAGE_URL=$(echo $RESPONSE | jq .hits[$RESPONSE_INDEX].largeImageURL | sed 's/"//g')
     curl $IMAGE_URL > $RESPONSE_INDEX.jpg
-	RESPONSE_INDEX=$[ $RESPONSE_INDEX + 1 ]
+	RESPONSE_INDEX=$[ $RESPONSE_INDEX + $SEARCH_TERM + 1 ]
 done
 
 
