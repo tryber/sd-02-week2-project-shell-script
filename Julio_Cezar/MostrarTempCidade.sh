@@ -10,6 +10,12 @@ ERRO_MSG=`echo $RESPONSE | egrep -o "\"cod\":\"[0-9]*\"" | cut -s -d":" -f2`
 #TEMPERATURA=$(echo $RESPONSE | jq '.main.temp')
 #ERRO_MSG=$(echo $RESPONSE | jq '.cod')
 
+if nc -zw1 google.com 443; then
+    echo "Voce esta conectado"
+else
+    echo "Voce não esta conectado a uma rede, por favor conecte-se e tente novamente."
+    exit 1
+fi
 
 if [ -z "$CIDADE" ]; then
     echo "Não foi informada uma cidade."
