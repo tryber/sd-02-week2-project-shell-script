@@ -36,10 +36,15 @@ else
     wget -i WebUrlTemp.txt
     rm $PATH_DIRECTORY/WebUrlTemp.txt
     
-    read -p "Deseja compactar o arquivo: (S/N)" COMPACTAR
-    if [ "$COMPACTAR" == "S" ]; then
+    read -p "Deseja compactar a pasta $SEARCH_TERM(S/N): " COMPACTAR
+    if [ "$COMPACTAR" == "S" ] || [ "$COMPACTAR" == "s" ] ; then
         cd ..
         tar -zcf $SEARCH_TERM.tar.gz $SEARCH_TERM
+        echo "Arquivo Compactado"
+        read -p "Deletar pasta $SEARCH_TERM (S/N): " DEL_DIR
+        if [ "$DEL_DIR" == "s" ] || [ "$DEL_DIR" == "S" ]; then
+            rm -r $SEARCH_TERM
+        fi
     fi
 fi
 
