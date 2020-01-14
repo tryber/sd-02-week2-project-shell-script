@@ -1,14 +1,14 @@
 #!/bin/bash
 #Verificando se possui as aplcações instaladas
-pacote=$(dpkg --get-selections | grep yad ) 
+pacote=$(dpkg --get-selections | grep yad )
 if [ -z "$pacote" ] ;
-then 
+then
      echo "Vamos precisar instalar o YAD para começar"
      sudo apt-get install yad
 fi
-pacote=$(dpkg --get-selections | grep xcowsay ) 
+pacote=$(dpkg --get-selections | grep xcowsay )
 if [ -z "$pacote" ] ;
-then 
+then
      echo "Vamos precisar instalar o XCOWSAY começar"
      sudo apt-get install xcowsay
 fi
@@ -22,7 +22,7 @@ function Baixar(){
     Busca=$(yad --entry --text="Qual imagem você deseja?" --height="100" --width="200" --title="Responda a Clotilde"  --buttons-layout=center --button="gtk-ok:0" )
     #Verificando e finalizando o programa se a opção de fechar a caixinha foi utilizada
     if [ $? -eq 252 ]
-    then 
+    then
         xcowsay --at=400,300 "Até mais" 2> /dev/null
         exit 1
     #Verificando se foi passado o algum assunto
@@ -36,7 +36,7 @@ function Baixar(){
     Q_Fotos=$(yad --entry --text="Quantas imagens você deseja?" --height="100" --width="200" --title="Responda a Clotilde" --buttons-layout=center --button="gtk-ok:0" )
     #Verificando e finalizando o programa se a opção de fechar a caixinha foi utilizada
     if [ $? -eq 252 ]
-    then 
+    then
         xcow say --at=400,300 "Até mais" 2> /dev/null
         exit 1
     fi
@@ -68,25 +68,25 @@ function Baixar(){
     fi
     #Criando a pasta caso não exista e baixando as fotos
     mkdir $Busca  2> /dev/null
-    mv Linksapi.txt ./$Busca  
+    mv Linksapi.txt ./$Busca
     cd $Busca
     termo=$(egrep -o 'webformatURL":"https://pixabay.com/get/(\d+|\w+)+.\w{3}' Linksapi.txt | cut -d '"' -f3)
-    wget --quiet $termo 
+    wget --quiet $termo
     #exclusão do arquivo que contem os links da api
     rm Linksapi.txt
-    xcowsay --at=400,300 "Deseja ter suas imagens em formato tar.gz?" 2> /dev/null    
+    xcowsay --at=400,300 "Deseja ter suas imagens em formato tar.gz?" 2> /dev/null
     #Verificando se o usario prefere ter um arquivo tar.gz
     (yad --text="Deseja ter suas imagens em formato tar.gz?" --height="100" --width="200" --title="Responda a Clotilde" --buttons-layout=center --button="gtk-yes:0" --button="gtk-no:1" )
     #criação do arquivo tar.gz com as fotos
     if [ $? -eq 0 ]
-    then 
+    then
         tar -czf $Busca.tar.gz *.jpg
         mv $Busca.tar.gz ..
         cd ..
         rm -r $Busca
         xcowsay --at=400,300 "Seu arquivo \"$Busca.tar.gz\" está pronto!" 2> /dev/null
     #Opção caso o usuario não deseje tar.gz
-    else   
+    else
         xcowsay --at=400,300 "Suas imagens ja estão na pasta \"$Busca\"" 2> /dev/null
         cd ..
     fi
