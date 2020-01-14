@@ -46,7 +46,7 @@ plugins:
   stylelint:
     enabled: true
 exclude_patterns:
-- "src/icontemp.png"
-- "src/temperature.png"
-- "src/teste.html"
-- "src/trybetools.png"
+- "diego/src/icontemp.png"
+- "diego/src/temperature.png"
+- "diego/src/teste.html"
+- "diego/src/trybetools.png"
