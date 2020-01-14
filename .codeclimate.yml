@@ -45,3 +45,8 @@ plugins:
     enabled: true
   stylelint:
     enabled: true
+exclude_patterns:
+- "src/icontemp.png"
+- "src/temperature.png"
+- "src/teste.html"
+- "src/trybetools.png"
