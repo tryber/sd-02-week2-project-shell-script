@@ -48,5 +48,4 @@ plugins:
 exclude_patterns:
 - "diego/src/icontemp.png"
 - "diego/src/temperature.png"
-- "diego/src/teste.html"
 - "diego/src/trybetools.png"
