@@ -1,100 +1,68 @@
 #!/bin/bash
-#Verificando se possui as aplcações instaladas
-pacote=$(dpkg --get-selections | grep yad )
-if [ -z "$pacote" ] ;
-then
-     echo "Vamos precisar instalar o YAD para começar"
-     sudo apt-get install yad
+API_KEY=14226934-e6bc1f36fa5e1560bf098247e
+TMP_FILE=tmp_pixabay.txt
+REGEX_FILE=pixabay_regex.txt
+SEARCH_TERM="$1"
+QTY_RESULTS="$2"
+TIMESTAMP=$(date +'%Y%m%d%H%M%S')
+PASTA_INIT=$(pwd)
+if [ -z "$SEARCH_TERM" ]; then
+    xcowsay --at=100,250 $'Ops, você precisa passar um termo de busca como primeiro argumento!\nVou fechar aqui, então chame o script novamente e digite o que quer buscar ok?'
+    exit 1
+elif [ -z "$QTY_RESULTS" ]; then
+    QTY_RESULTS=3
+    xcowsay --at=100,250 $'Não foi passado nenhum valor como segundo argumento.\nEntão, o script vai procurar por 3 fotos, que é o mínimo do Pixabay.'
 fi
-pacote=$(dpkg --get-selections | grep xcowsay )
-if [ -z "$pacote" ] ;
-then
-     echo "Vamos precisar instalar o XCOWSAY começar"
-     sudo apt-get install xcowsay
+[ "$QTY_RESULTS" -gt 0 ] 2> /dev/null
+LAST_SH=$?
+if [ "$LAST_SH" -gt 0 ]; then
+    xcowsay --at=100,250 $'Ops, você precisa passar um valor numérico de fotos para buscar como segundo argumento!\nVou fechar aqui, então chame o script novamente e digite a quantidade desejada ok?'
+    exit 1
+elif [ "$QTY_RESULTS" -lt 3 ] || [ "$QTY_RESULTS" -gt 200 ]; then
+    xcowsay --at=100,250 $'O site consegue retornar entre 3 a 200 imagens por pesquisa.\nPor favor, refaça a pesquisa digitando um valor entre 3 a 200 como argumento.'
+    exit 1
 fi
-
-xcowsay --at=400,300 "Olá, sou o Xcowsay, vou te ajudar a baixar as imagens! clique em mim para prosseguir." 2> /dev/null
-function Baixar(){
-    #Inicio do codigo para buscar imagem
-    API_KEY=14207965-9493642060cb1c95148269738
-    #Recebendo o assunto a ser pesquisado
-    xcowsay --at=400,300 "Qual imagem você procura?" 2> /dev/null
-    Busca=$(yad --entry --text="Qual imagem você deseja?" --height="100" --width="200" --title="Responda a Clotilde"  --buttons-layout=center --button="gtk-ok:0" )
-    #Verificando e finalizando o programa se a opção de fechar a caixinha foi utilizada
-    if [ $? -eq 252 ]
-    then
-        xcowsay --at=400,300 "Até mais" 2> /dev/null
-        exit 1
-    #Verificando se foi passado o algum assunto
-    elif [ $Busca -z ] 2> /dev/null
-    then
-        xcowsay --at=400,300 "Sem imagem, sem download, até mais"  2> /dev/null
-        exit 1
-    fi
-    xcowsay --at=400,300 "Quantas imagens de \"$Busca\" você quer?"  2> /dev/null
-    #Recebendo o numero de imagens
-    Q_Fotos=$(yad --entry --text="Quantas imagens você deseja?" --height="100" --width="200" --title="Responda a Clotilde" --buttons-layout=center --button="gtk-ok:0" )
-    #Verificando e finalizando o programa se a opção de fechar a caixinha foi utilizada
-    if [ $? -eq 252 ]
-    then
-        xcow say --at=400,300 "Até mais" 2> /dev/null
-        exit 1
-    fi
-    #Valor padrão se a entrada for vazia
-    if [ $Q_Fotos -z ] 2> /dev/null
-    then
-        Q_Fotos=3
-    fi
-    #verificação se esta dentro dos padrões de 3 a 200
-    if (( $Q_Fotos < 3 ))
-    then
-        xcowsay --at=400,300 "Desculpa, so consigo pegar o minimo de 3 imagens :C" 2> /dev/null
-        exit 1
-    elif (( $Q_Fotos > 200 ))
-    then
-        xcowsay --at=400,300 "Desculpa, so consigo pegar 200 imagens por pesquisa :C" 2> /dev/null
-        exit 1
-    fi
-    #Fazendo a busca pela api e registrando os dados em texto
-    RESPONSE=`curl -s -G -L --data-urlencode "key=$API_KEY" --data-urlencode "q=$Busca" --data-urlencode "image_type=photo" --data-urlencode "per_page=$Q_Fotos" https://pixabay.com/api/`;
-    echo $RESPONSE > Linksapi.txt
-    #Recortando o numero de resultados
-    encontrado=`cut -d ":" -f2 Linksapi.txt | cut -d ',' -f1`
-    #Informando se não houver resultado
-    if [ $encontrado -eq 0 ]
-    then
-        xcowsay --at=400,300 "Que pena, nenhuma imagem de \"$Busca\" foi encontrada, Até mais" 2> /dev/null
-        exit 0
-    fi
-    #Criando a pasta caso não exista e baixando as fotos
-    mkdir $Busca  2> /dev/null
-    mv Linksapi.txt ./$Busca
-    cd $Busca
-    termo=$(egrep -o 'webformatURL":"https://pixabay.com/get/(\d+|\w+)+.\w{3}' Linksapi.txt | cut -d '"' -f3)
-    wget --quiet $termo
-    #exclusão do arquivo que contem os links da api
-    rm Linksapi.txt
-    xcowsay --at=400,300 "Deseja ter suas imagens em formato tar.gz?" 2> /dev/null
-    #Verificando se o usario prefere ter um arquivo tar.gz
-    (yad --text="Deseja ter suas imagens em formato tar.gz?" --height="100" --width="200" --title="Responda a Clotilde" --buttons-layout=center --button="gtk-yes:0" --button="gtk-no:1" )
-    #criação do arquivo tar.gz com as fotos
-    if [ $? -eq 0 ]
-    then
-        tar -czf $Busca.tar.gz *.jpg
-        mv $Busca.tar.gz ..
-        cd ..
-        rm -r $Busca
-        xcowsay --at=400,300 "Seu arquivo \"$Busca.tar.gz\" está pronto!" 2> /dev/null
-    #Opção caso o usuario não deseje tar.gz
+RESPONSE=$(curl -s -G -L --data-urlencode "key=$API_KEY" --data-urlencode "q=$SEARCH_TERM" --data-urlencode "image_type=photo" --data-urlencode "per_page=$QTY_RESULTS" https://pixabay.com/api)
+echo "$RESPONSE" > "$TMP_FILE"
+grep -o -E '"webformatURL":[^,]+' "$TMP_FILE" | cut -d: -f2-3 | grep -o -E '[^"]+' > "$REGEX_FILE"
+COUNT_LINES=$(wc -l < "$REGEX_FILE")
+COUNT_BYTES=$(wc -m < "$REGEX_FILE")
+if [ "$COUNT_BYTES" -eq 0 ]; then
+    xcowsay --at=100,250 $'Nenhuma foto encontrada de acordo com o argumento passado.\nVerifique a grafia e tente novamente.'
+    rm $TMP_FILE
+    rm $REGEX_FILE
+    exit 1
+fi
+xcowsay --at=100,250 $'Foram encontradas '"$COUNT_LINES"' fotos de acordo com o argumento passado.'
+xcowsay --at=100,250 $'Qual a saída preferida? Uma pasta ou um arquivo TAR?'
+OPTION=$(zenity  --list  --text "Escolha sua opção" --radiolist --column "Marcar" --column "Opções" FALSE "Arquivo TAR" TRUE "Nova pasta");
+if [ "$OPTION" = "Nova pasta" ]; then
+mkdir "$SEARCH_TERM" 2> /dev/null
+LAST_SH=$?
+    if [ "$LAST_SH" -gt 0 ]; then
+        xcowsay --at=100,250 $'Ops, parece que a pasta já existe!\nCaso queira criar uma pasta nova, digite um nome para a pasta e clique no OK.\nCaso queira utilizar a pasta já criada, deixe a caixa em branco e clique em OK.'
+        PASTA=$(zenity --title="Criar nova pasta?" --text "Por favor, insira um nome para a nova pasta ou deixe vazio para usar a pasta já criada." --entry)
+        if [ -z "$PASTA" ]; then
+            PASTA="$SEARCH_TERM"
+        fi
+        mkdir "$PASTA" 2> /dev/null
+        cd "$PASTA" || exit
+        wget --show-progress -qi ../"$REGEX_FILE" | zenity --progress --pulsate --no-cancel --text "Baixando fotos, aguarde um momento:" --width=300 --height=80
+        xcowsay --at=100,250 $'Os arquivos foram baixados para a pasta \n'"$PASTA"', obrigado pelo uso!'
     else
-        xcowsay --at=400,300 "Suas imagens ja estão na pasta \"$Busca\"" 2> /dev/null
-        cd ..
+        cd "$SEARCH_TERM" || exit
+        wget --show-progress -qi ../"$REGEX_FILE" | zenity --progress --pulsate --no-cancel --text "Baixando fotos, aguarde um momento:" --width=300 --height=80
+        xcowsay --at=100,250 $'Os arquivos foram baixados para a pasta \n'"$SEARCH_TERM"', obrigado pelo uso!'
     fi
-}
-while [ $? -ne 1 ]; do
-    Baixar
-    xcowsay --at=400,300 "Deseja procurar mais imagens?" 2> /dev/null
-    (yad --text="Deseja procurar mais imagens?" --height="100" --width="200" --title="Responda a Clotilde" --buttons-layout=center --button="gtk-yes:0" --button="gtk-no:1" )
-done
-cd ./Imagem
-xcowsay --at=400,300 -d ImageLu.jpeg 2> /dev/null
+elif [ "$OPTION" = "Arquivo TAR" ]; then
+    mkdir pixabay-"$TIMESTAMP"
+    cd pixabay-"$TIMESTAMP" || exit
+    wget --show-progress -qi ../"$REGEX_FILE" | zenity --progress --pulsate --no-cancel --auto-close --text "Baixando fotos, aguarde um momento:" --width=300 --height=80
+    cd "$PASTA_INIT" || exit
+    tar -czf pixabay-"$SEARCH_TERM"-"$TIMESTAMP".tar.gz pixabay-"$TIMESTAMP"
+    rm -r pixabay-"$TIMESTAMP"
+    xcowsay --at=100,250 $'Os arquivos foram baixados e após isso compactados, o nome do arquivo TAR é:\npixabay-'"$TIMESTAMP"'.tar.gz, obrigado pelo uso!'
+fi
+cd "$PASTA_INIT" || exit
+    rm $TMP_FILE
+    rm $REGEX_FILE
