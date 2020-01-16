@@ -45,7 +45,3 @@ plugins:
     enabled: true
   stylelint:
     enabled: true
-exclude_patterns:
-- "diego/src/icontemp.png"
-- "diego/src/temperature.png"
-- "diego/src/trybetools.png"
